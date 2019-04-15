@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name = "PMFBY">
+    <parameter name="BROWSERTYPE" value="chrome"/>
+    <parameter name="REMOTE" value="false"/>
+    <test name="LOGIN">
+        <classes>
+            <class name="com.pmfby.execution.TestExecution"/>
+            <class name="com.pmfby.execution.Tests"/>
+        </classes>
+    </test>
+</suite>
