@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
-public class selectDropDown extends Elements {
+public class SelectDropDown extends Elements {
 
     protected WebElement element;
     Result result = new Result();

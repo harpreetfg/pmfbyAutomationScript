@@ -7,9 +7,16 @@ import java.io.IOException;
 
 public class Tests extends TestExecution {
 
+
+    PMFBYHome home = new PMFBYHome();
+
     @Test(description = "LOGIN")
     public void logIn() throws IOException {
-        PMFBYHome home = new PMFBYHome();
         home.signIn();
+    }
+
+    @Test(description="Select the SSSYID", dependsOnMethods = {"logIn"})
+    public void selectSSSYID() throws IOException {
+        home.selectStateSSSYID("HIMACHAL PRADESH");
     }
 }

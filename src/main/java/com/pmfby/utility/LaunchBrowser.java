@@ -117,7 +117,7 @@ public class LaunchBrowser extends WebDriverWrapper {
             }
             driver.manage().window().maximize();
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-            driver.get(PMFBYConfig.PMFBY_URL);
+            driver.get(PMFBYConfig.DEV1_URL);
             wait.waitForPageLoad();
         }
         catch(Exception e){
