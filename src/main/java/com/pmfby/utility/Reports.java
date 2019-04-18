@@ -5,10 +5,8 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.pmfby.resources.ScreenShot;
 import com.relevantcodes.extentreports.LogStatus;
 import org.testng.ITestResult;
-import org.testng.Reporter;
 
 import java.util.Date;
 

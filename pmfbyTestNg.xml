@@ -1,5 +1,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name = "PMFBY">
+    <listeners>
+        <listener class-name="com.pmfby.utility.Listener"/>
+    </listeners>
     <parameter name="BROWSERTYPE" value="chrome"/>
     <parameter name="REMOTE" value="false"/>
     <test name="LOGIN">
