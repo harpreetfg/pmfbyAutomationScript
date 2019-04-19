@@ -12,7 +12,7 @@ public class Checkbox extends Elements {
     protected static WebElement element;
 
 
-    public static void check(By locator){
+    public void check(By locator){
         try{
             element = findElement(locator);
             if(!element.isSelected()){
@@ -28,7 +28,7 @@ public class Checkbox extends Elements {
     }
 
 
-    public static void check(By locator, int index){
+    public void check(By locator, int index){
         try{
             int count = 0;
             if(findElements(locator) != null){
@@ -51,7 +51,7 @@ public class Checkbox extends Elements {
     }
 
 
-    public static void unCheck(By locator){
+    public void unCheck(By locator){
         try{
             element = findElement(locator);
             if(element.isSelected())
@@ -66,7 +66,7 @@ public class Checkbox extends Elements {
     }
 
 
-    public static void unCheck(By locator, int index){
+    public void unCheck(By locator, int index){
         try{
             int count = 0;
             if(findElements(locator) != null){

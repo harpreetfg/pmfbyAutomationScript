@@ -12,6 +12,11 @@ public class Window extends WebDriverWrapper {
     private List<String> child;
 
 
+    public int getWindowHandles(){
+        return driver.getWindowHandles().size();
+    }
+
+
     public void switchWindow(int index){
         try{
             child = new ArrayList<>(driver.getWindowHandles());

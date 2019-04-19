@@ -96,11 +96,11 @@ public class LaunchBrowser extends WebDriverWrapper {
                     capabilities.setBrowserName("Google Chrome");
                     capabilities.setPlatform(Platform.ANY);
                     try{
-                        driver = new RemoteWebDriver(new URL(PMFBYConfig.PMFBY_URL), capabilities);
+                        driver = new RemoteWebDriver(new URL(PMFBYConfig.PROD_CI_URL), capabilities);
                     }
                     catch(MalformedURLException e){
                         e.printStackTrace();
-                        Loggers.logger.error("Remote URL is invalid: "+PMFBYConfig.PMFBY_URL);
+                        Loggers.logger.error("Remote URL is invalid: "+PMFBYConfig.PROD_CI_URL);
                     }
                 }
                 else{
@@ -117,7 +117,7 @@ public class LaunchBrowser extends WebDriverWrapper {
             }
             driver.manage().window().maximize();
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-            driver.get(PMFBYConfig.DEV1_URL);
+            driver.get(PMFBYConfig.PROD_CI_URL);
             wait.waitForPageLoad();
         }
         catch(Exception e){

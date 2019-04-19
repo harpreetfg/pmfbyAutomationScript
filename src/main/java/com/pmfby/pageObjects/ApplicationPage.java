@@ -13,7 +13,7 @@ public class ApplicationPage {
     public static By UTR_LIST = By.xpath("//*[contains(@class,'btnPolicy')]/a[text()='UTR List']");
 
     public static By CHOOSE_BRANCH_HEADER = By.xpath("(//*[text()='Choose Branch'])[1]");
-    public static By SELECT_BRANCH = By.xpath("(//*[text()='Branch']/following-sibling::select)[1]");
+    public static By SELECT_BRANCH = By.xpath("(//*[text()='Branch']/following-sibling::select)");
     public static By SELECT_PACS = By.xpath("(//*[text()='PACS']/following-sibling::select)[1]");
     public static By SUBMIT_BUTTON_CHOOSE_BRANCH = By.xpath("(//*[text()='Submit'])[1]");
     public static By CHANGE_SSSY_ID_BUTTON = By.xpath("//button[text()='Change SSSY ID']");
