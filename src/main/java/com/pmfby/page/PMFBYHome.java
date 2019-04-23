@@ -27,24 +27,25 @@ public class PMFBYHome {
             Loggers.logger.info("Clicked on the Sign In link");
 //            screenShot.takeScreenShot(Status.INFO, "After clicking on the Sign In link");
             wait.waitForElementToBeDisplayed(SignInPage.FARMER_LOGIN_BUTTON);
-            Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.INFO, "After Clicking on the Sign In Link"));
+            Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.INFO,
+                    "After Clicking on the Sign In Link"));
             text.sendText(SignInPage.MOBILE_NUMBER, userName);
             text.sendText(SignInPage.PASSWORD, password);
             Thread.sleep(10000);
             click.buttonClick(SignInPage.LOGIN_BUTTON);
             Loggers.logger.info("Clicked on the Login Button");
             wait.waitForElementToBeDisplayed(LoginPage.SUBMIT_BUTTON);
-            if(VerifyElements.isElementPresent(LoginPage.CHANGE_PASSWORD_SUBMIT_BUTTON)){
+            if (!VerifyElements.isElementVisible(LoginPage.CHANGE_PASSWORD_SUBMIT_BUTTON)) {
+                Loggers.logger.info("Successfully landed on the dashboard after logging in");
+                Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.PASS, "Successfully logged in"));
+            } else {
                 Loggers.logger.info("Successfully landed on the dashboard after logging in");
                 closeChangePasswordPopUp();
                 Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.PASS, "Successfully logged in"));
             }
-            else{
-                Loggers.logger.info("Successfully landed on the dashboard after logging in");
-                Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.PASS, "Successfully logged in"));
-            }
         }
         catch (Exception e){
+            Assert.fail();
             e.printStackTrace();
             Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.FAIL, "Failed to log in to the user account"));
             Loggers.logger.error("User cannot be logged in");
@@ -70,7 +71,6 @@ public class PMFBYHome {
             select.selectElementByText(LoginPage.SELECT_STATE_SSSYID, state);
             Loggers.logger.info("Selected the State for scheme: "+state);
             if(select.defaultSelectedValue(LoginPage.SELECT_STATE_SSSYID).equals(state)){
-                wait.waitForElementToBeDisplayed(LoginPage.SELECT_SSSYID_RADIO_BUTTON);
                 if(!VerifyElements.isElementSelected(LoginPage.SELECT_SSSYID_RADIO_BUTTON)){
                     click.buttonClick(LoginPage.SELECT_SSSYID_RADIO_BUTTON);
                     Loggers.logger.info("Selected the SSSYID");

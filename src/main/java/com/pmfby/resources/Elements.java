@@ -63,7 +63,7 @@ public class Elements extends WebDriverWrapper {
     }
 
 
-    public static  List<WebElement> findElements(By locator){
+    public List<WebElement> findElements(By locator){
         try{
             elements = driver.findElements(locator);
             return elements.size() > 0 ? elements : null;

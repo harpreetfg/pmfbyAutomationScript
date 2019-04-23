@@ -35,7 +35,7 @@ public class Click extends Elements {
             if(findElements(locator) != null){
                 List<WebElement> list = findElements(locator);
                 for(WebElement element:list){
-                    if(verifyElements.isElementVisible(element)){
+                    if(verifyElements.isElementVisible(locator)){
                         if(count == index){
                             list.get(index).click();
                             Thread.sleep(1000L);
@@ -71,13 +71,13 @@ public class Click extends Elements {
     }
 
 
-    public static void buttonClickByKey(By locator, int index){
+    public void buttonClickByKey(By locator, int index){
         try{
             int count = 0;
             if(findElements(locator) != null){
                 List<WebElement> list = findElements(locator);
                 for(WebElement element : list){
-                    if(verifyElements.isElementVisible(element)){
+                    if(verifyElements.isElementVisible(locator)){
                         if(count == index){
                             list.get(index).click();
                             Thread.sleep(1000L);

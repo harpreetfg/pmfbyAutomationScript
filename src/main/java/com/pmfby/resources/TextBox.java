@@ -29,7 +29,7 @@ public class TextBox extends Elements {
     }
 
 
-    public static void sendText(By locator, String data, int index){
+    public void sendText(By locator, String data, int index){
         try{
             int count = 0;
             if(findElements(locator)!=null){
@@ -72,13 +72,13 @@ public class TextBox extends Elements {
     }
 
 
-    public static void textAndEnter(By locator, String data, int index){
+    public void textAndEnter(By locator, String data, int index){
         try{
             int count = 0;
             if(findElements(locator)!=null){
                 List<WebElement> list = findElements(locator);
                 for(WebElement element:list){
-                    if(VerifyElements.isElementVisible(element)){
+                    if(VerifyElements.isElementVisible(locator)){
                         if(count == index){
                             element.clear();
                             element.sendKeys(data);

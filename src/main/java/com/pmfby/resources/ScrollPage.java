@@ -1,5 +1,6 @@
 package com.pmfby.resources;
 
+import com.pmfby.utility.Loggers;
 import com.pmfby.utility.WebDriverWrapper;
 import org.openqa.selenium.JavascriptExecutor;
 
@@ -7,17 +8,29 @@ public class ScrollPage extends WebDriverWrapper {
 
     private static JavascriptExecutor js = (JavascriptExecutor)driver;
 
-    public static void scrollUp(){
+    public void scrollUp(){
         js.executeScript("window.scrollBy(250, 0)", "");
     }
 
 
-    public static void scrollDown(){
-        js.executeScript("window.scrollBy(0, 250)", "");
+    public void scrollDown(){
+        try {
+            Thread.sleep(2000);
+            ((JavascriptExecutor)driver).executeScript("window.scrollBy(0, 450);");
+        } catch (Throwable e) {
+            Loggers.logger.error("Scroll Down is not working");
+        }
     }
 
 
-    public static void scrollBottom(){
-        js.executeScript("window.scrollBy(0, document.body.scrollHeight)");
+    public void scrollBottom(){
+        try{
+            Thread.sleep(1000);
+            ((JavascriptExecutor)driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            Loggers.logger.error("Scroll is not working");
+        }
     }
 }

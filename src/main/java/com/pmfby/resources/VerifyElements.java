@@ -8,15 +8,16 @@ public class VerifyElements extends Elements {
 
     protected static WebElement element;
 
-    public static boolean isElementVisible(WebElement element){
+    public static boolean isElementVisible(By locator){
         boolean isElement = false;
         try{
+            element = findElement(locator);
             if(element.isDisplayed())
                 isElement = true;
         }
         catch (Exception e){
             e.printStackTrace();
-            Loggers.logger.error("Web element not located: " +element );
+            Loggers.logger.error("Web element not located: " +locator );
             return false;
         }
         return isElement;

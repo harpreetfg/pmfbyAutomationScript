@@ -35,7 +35,7 @@ public class GetText extends Elements {
             if(findElements(locator) != null){
                 List<WebElement> list = findElements(locator);
                 for(WebElement element:list){
-                    if(VerifyElements.isElementVisible(element)){
+                    if(VerifyElements.isElementVisible(locator)){
                         if(count == index)
                             text = element.getText();
                     }

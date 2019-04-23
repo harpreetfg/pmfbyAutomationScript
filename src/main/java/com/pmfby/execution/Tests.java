@@ -28,8 +28,10 @@ public class Tests extends TestExecution {
     }
 
 
-    @Test(description = "FILL UP THE FARMER DETAILS", dependsOnMethods = {"goToApplicationPage"})
-    public void  fillUpBankAndLoaneeFarmerDetails(){
-        application.fillLoaneeDetails("1000000117");
+    @Test(description = "SUBMIT APPLICATION", dependsOnMethods = {"goToApplicationPage"})
+    public void  fillUpBankAndLoaneeFarmerDetails() throws IOException {
+        application.fillLoaneeDetails("1000000119");
+        application.goToTheCropDetailsPage();
+        application.submitApplication();
     }
 }

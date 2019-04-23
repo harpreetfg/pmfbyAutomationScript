@@ -7,6 +7,7 @@ import com.pmfby.utility.Loggers;
 import com.pmfby.utility.Reports;
 import org.testng.Assert;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class Application {
@@ -16,14 +17,15 @@ public class Application {
     private SelectDropDown select = new SelectDropDown();
     private ScreenShot capture = new ScreenShot();
     private TextBox text = new TextBox();
-    private Checkbox checkbox = new Checkbox();
-    private Window window = new Window();
+    private GetText getText = new GetText();
+    private ScrollPage scroll = new ScrollPage();
+    private SelectCalendar calendar = new SelectCalendar();
+    private Elements elements = new Elements();
 
     private void selectUserBranch(){
         try{
             click.buttonClick(ApplicationPage.SELECT_BRANCH);
             select.selectElementByText(ApplicationPage.SELECT_BRANCH, "BILASPUR");
-            System.out.println("=======================================");
             Loggers.logger.info("Selected the Branch Head/User branch");
             Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.INFO, "Selected the branch"));
 //                click.buttonClick(ApplicationPage.SELECT_PACS);
@@ -38,10 +40,10 @@ public class Application {
     }
 
 
-    public void fillLoaneeDetails(String accountNumber){
+    public void fillLoaneeDetails(String accountNumber) throws IOException {
         try{
             click.buttonClick(ApplicationPage.APPLICATION_FORM_LOANEE);
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             if(VerifyElements.isElementPresent(ApplicationPage.SELECT_BRANCH)){
                 selectUserBranch();
                 wait.waitForPageLoad();
@@ -66,20 +68,116 @@ public class Application {
             text.sendText(ApplicationPage.CONFIRM_BANK_ACCOUNT_NUMBER, accountNumber);
             select.selectElementByText(ApplicationPage.ACCOUNT_TYPE, "Single");
             click.buttonClick(ApplicationPage.CHECK_BANK_DETAILS_BUTTON);
-            Loggers.logger.info("Click on the Check Bank Details & Continue button");
-            Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.INFO,
+            Thread.sleep(1000);
+            scroll.scrollDown();
+            Loggers.logger.info("Clicked on the Check Bank Details & Continue button");
+            Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.PASS,
                     "Validating the provided bank details"));
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            Loggers.logger.error("Failed to retrieve the Loanee Details");
+            Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.FAIL,
+                    "Failed to retrieve the Loanee Details"));
+        }
+    }
+
+
+    public void fillUpNonLoaneeDetails(String bankState, String bankDistrict, String bankName, String bankBranch,
+                                       String accountNumber) throws IOException {
+        try{
+            click.buttonClick(ApplicationPage.APPLICATION_FORM_NON_LOANEE);
+            Thread.sleep(1000);
+            if(VerifyElements.isElementPresent(ApplicationPage.SELECT_BRANCH)){
+                selectUserBranch();
+                wait.waitForPageLoad();
+                if(VerifyElements.isElementPresent(ApplicationPage.BANK_ACCOUNT_NUMBER)){
+                    Loggers.logger.info("User is dropped on Non Loanee Application Form page");
+                    Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.INFO,
+                            "Successfully directed to the Non Loanee Application page"));
+                }
+                else{
+                    Assert.fail();
+                    Loggers.logger.error("Failed to navigate to the Application Non Loanee From page");
+                    Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.FAIL,
+                            "Failed to navigate to the Application Non Loanee From page"));
+                }
+            }
+            else{
+                Loggers.logger.info("Dropped on the Non Loanee Application Form page");
+                Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.INFO,
+                        "Dropped on the Non Loanee Application Form page"));
+            }
+            click.buttonClick(ApplicationPage.BANK_STATE);
+            select.selectElementByText(ApplicationPage.BANK_STATE, bankState);
+            click.buttonClick(ApplicationPage.BANK_DISTRICT);
+            select.selectElementByText(ApplicationPage.BANK_DISTRICT, bankDistrict);
+            click.buttonClick(ApplicationPage.BANK_NAME);
+            select.selectElementByText(ApplicationPage.BANK_NAME, bankName);
+            click.buttonClick(ApplicationPage.BANK_BRANCH_NAME);
+            select.selectElementByText(ApplicationPage.BANK_BRANCH_NAME, bankBranch);
+            click.buttonClick(ApplicationPage.BANK_ACCOOUNT_TYPE);
+            select.selectElementByText(ApplicationPage.BANK_ACCOOUNT_TYPE, "Saving");
+            text.sendText(ApplicationPage.BANK_ACCOUNT_NUMBER, accountNumber);
+            text.sendText(ApplicationPage.CONFIRM_BANK_ACCOUNT_NUMBER, accountNumber);
+            click.buttonClick(ApplicationPage.CHECK_BANK_DETAILS_BUTTON);
+            Thread.sleep(1000);
+            wait.waitForElementToBeDisplayed(ApplicationPage.SAVE_AND_CONTINUE_BUTTON);
+            scroll.scrollDown();
+            Loggers.logger.info("Clicked on the Check Bank Details & Continue button");
+            Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.PASS,
+                    "Validating the provided bank details"));
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            Loggers.logger.error("Failed to retrieve the Non Loanee Details");
+            Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.FAIL,
+                    "Failed to retrieve the Non Loanee Details"));
+        }
+    }
+
+
+    public void goToTheCropDetailsPage() throws IOException {
+        try{
             if(VerifyElements.isElementPresent(ApplicationPage.SAVE_AND_CONTINUE_BUTTON)){
-                if(!Objects.requireNonNull(Elements.findElements(ApplicationPage.FARMER_NAME)).isEmpty()){
-                    if(VerifyElements.isElementSelected(ApplicationPage.PRIMARY_FARMER)){
-                        click.buttonClick(ApplicationPage.SAVE_AND_CONTINUE_BUTTON);
-                        Loggers.logger.info("Clicked on the Save and Continue button");
-                        wait.waitForElementToBeDisplayed(ApplicationPage.SELECT_CROP);
-                        Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.PASS,
-                                "Farmer Details filled and navigated to the crop details page"));
-                    }
-                    else{
-                        checkbox.check(ApplicationPage.PRIMARY_FARMER);
+                if(!Objects.requireNonNull(elements.findElements(ApplicationPage.FARMER_NAME)).isEmpty()){
+                    click.buttonClick(ApplicationPage.SAVE_AND_CONTINUE_BUTTON);
+                    Loggers.logger.info("Clicked on the Save and Continue button");
+                    wait.waitForElementToBeDisplayed(ApplicationPage.SELECT_CROP);
+                    Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.PASS,
+                            "Farmer Details filled and navigated to the crop details page"));
+                }
+                else{
+                    text.sendText(ApplicationPage.FARMER_NAME, "Test Farmer");
+                    click.buttonClick(ApplicationPage.SELECT_VERIFICATION, 1);
+                    if(!getText.getTextValue(ApplicationPage.SELECTED_SCHEME).contains("ASSAM")
+                            ||!getText.getTextValue(ApplicationPage.SELECTED_SCHEME).contains("JAMMU")||
+                            !getText.getTextValue(ApplicationPage.SELECTED_SCHEME).contains("MEGHALAYA")){
+                        text.sendText(ApplicationPage.ID_PROOF, "999999999999");
+                        click.buttonClick(ApplicationPage.RELATION_TYPE);
+                        select.selectElementByIndex(ApplicationPage.RELATION_TYPE, 1);
+                        text.sendText(ApplicationPage.MOBILE_NUMBER, "7770007770");
+                        text.sendText(ApplicationPage.AGE, "33");
+                        click.buttonClick(ApplicationPage.GENDER);
+                        select.selectElementByIndex(ApplicationPage.GENDER, 1);
+                        click.buttonClick(ApplicationPage.CASTE_CATEGORY);
+                        select.selectElementByIndex(ApplicationPage.CASTE_CATEGORY, 1);
+                        click.buttonClick(ApplicationPage.FARMER_CATEGORY);
+                        select.selectElementByIndex(ApplicationPage.FARMER_CATEGORY, 1);
+                        click.buttonClick(ApplicationPage.FARMER_TYPE);
+                        select.selectElementByIndex(ApplicationPage.FARMER_TYPE, 1);
+
+                        click.buttonClick(ApplicationPage.FARMER_STATE);
+                        select.selectElementByText(ApplicationPage.FARMER_STATE, "HIMACHAL PRADESH");
+                        click.buttonClick(ApplicationPage.FARMER_DISTRICT);
+                        select.selectElementByText(ApplicationPage.FARMER_DISTRICT, "Bilaspur");
+                        click.buttonClick(ApplicationPage.FARMER_SUB_DISTRICT);
+                        select.selectElementByIndex(ApplicationPage.FARMER_SUB_DISTRICT, 1);
+                        click.buttonClick(ApplicationPage.FARMER_VILLAGE);
+                        select.selectElementByIndex(ApplicationPage.FARMER_VILLAGE, 1);
+                        text.sendText(ApplicationPage.FARMER_PINCODE, "101010");
+                        Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.INFO,
+                                "After filling up the farmer details"));
                         click.buttonClick(ApplicationPage.SAVE_AND_CONTINUE_BUTTON);
                         Loggers.logger.info("Clicked on the Save and Continue button");
                         wait.waitForElementToBeDisplayed(ApplicationPage.SELECT_CROP);
@@ -87,6 +185,81 @@ public class Application {
                                 "Farmer Details filled and navigated to the crop details page"));
                     }
                 }
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            Loggers.logger.error("Failed to fill up the farmer details");
+            Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.FAIL,
+                    "Failed to go to the Crop Details page"));
+        }
+    }
+
+
+    public void submitApplication(){
+        try{
+            Thread.sleep(1000);
+            click.buttonClick(ApplicationPage.CROP_DETAILS_DISTRICT);
+            select.selectElementByIndex(ApplicationPage.CROP_DETAILS_DISTRICT, 1);
+            Loggers.logger.info("Selected the notified District");
+            click.buttonClick(ApplicationPage.CROP_DETAILS_TEHSIL_SUB_TEHSIL);
+            select.selectElementByIndex(ApplicationPage.CROP_DETAILS_TEHSIL_SUB_TEHSIL, 1);
+            Loggers.logger.info("Selected the notified Tehsil");
+            click.buttonClick(ApplicationPage.CROP_DETAILS_GRAM_PANCHAYAT);
+            select.selectElementByIndex(ApplicationPage.CROP_DETAILS_GRAM_PANCHAYAT, 1);
+            Loggers.logger.info("Selected the notified Gram Panchayat");
+            Thread.sleep(1000);
+            click.buttonClick(ApplicationPage.CROP_DETAILS_VILLAGE);
+            select.selectElementByIndex(ApplicationPage.CROP_DETAILS_VILLAGE, 1);
+            Loggers.logger.info("Selected the notified Village");
+            click.buttonClick(ApplicationPage.SELECT_CROP);
+            Thread.sleep(1000);
+            if(!elements.findElements(ApplicationPage.SELECT_CROP).isEmpty()){
+                select.selectElementByText(ApplicationPage.SELECT_CROP, "Babool");
+                Loggers.logger.info("Selected the crop");
+                click.buttonClick(ApplicationPage.SELECT_PREMIUM_DEBIT_DATE);
+                calendar.selectDate("22");
+                click.buttonClick(ApplicationPage.SOWING_DATE);
+                calendar.selectDate("2");
+                text.sendText(ApplicationPage.SURVEY_NUMBER, "10a");
+                text.sendText(ApplicationPage.PLOT_NUMBER, "11/b");
+                text.sendText(ApplicationPage.INSURED_AREA, "2");
+                click.buttonClick(ApplicationPage.ADD_CROP_FOR_INSURANCE);
+                Loggers.logger.info("Clicked on the Add Crop For Insurance button");
+                click.buttonClick(ApplicationPage.PREVIEW_BUTTON);
+                Thread.sleep(1000);
+                scroll.scrollBottom();
+                if(VerifyElements.isElementVisible(ApplicationPage.SUBMIT_BUTTON)){
+                    Loggers.logger.info("Previewing the application");
+                    Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.INFO,
+                            "After clicking on the Preview button"));
+                    click.buttonClick(ApplicationPage.SUBMIT_BUTTON);
+                    wait.waitForElementToBeDisplayed(ApplicationPage.CLOSE_BUTTON);
+                    if(VerifyElements.isElementPresent(ApplicationPage.POLICY_ID)){
+                        Loggers.logger.info("Application has been successfully submitted");
+                        Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.PASS,
+                                "Application has been successfully submitted"));
+                        Loggers.logger.info(getText.getTextValue(ApplicationPage.POLICY_ID));
+                    }
+                    else{
+                        Loggers.logger.error("Application has not been submitted and hence failed.");
+                        Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.FAIL,
+                                "Application has failed to be submitted"));
+                        Assert.fail();
+                    }
+                }
+                else{
+                    Loggers.logger.error("Application cannot be previewed");
+                    Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.FAIL,
+                            "Application cannot be previewed and hence gets failed to be submitted"));
+                    Assert.fail();
+                }
+            }
+            else{
+                Loggers.logger.error("Notified Crops Not Available");
+                Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.FAIL,
+                        "Notified Crops Not Available and Hence Failed to Submit The Application"));
+                Assert.fail();
             }
         }
         catch(Exception e){

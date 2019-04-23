@@ -11,6 +11,7 @@ public class ApplicationPage {
     public static By APPROVED_APPLICATIONS = By.xpath("//*[contains(@class,'btnPolicy')]/a[text()='Approved Applications']");
     public static By REJECTED_APPLICATIONS = By.xpath("//*[contains(@class,'btnPolicy')]/a[text()='Rejected Paid Applications']");
     public static By UTR_LIST = By.xpath("//*[contains(@class,'btnPolicy')]/a[text()='UTR List']");
+    public static By SELECTED_SCHEME = By.cssSelector("[class*=bankIFSCDetails]");
 
     public static By CHOOSE_BRANCH_HEADER = By.xpath("(//*[text()='Choose Branch'])[1]");
     public static By SELECT_BRANCH = By.xpath("(//*[text()='Branch']/following-sibling::select)");
@@ -22,6 +23,11 @@ public class ApplicationPage {
     public static By ACCOUNT_TYPE = By.cssSelector("select[name='account type']");
     public static By ACCOUNT_HOLDER_COUNT = By.cssSelector("select[name='No. of Account Holder']");
     public static By CHECK_BANK_DETAILS_BUTTON = By.cssSelector("[class*='customPrimaryButton']");
+    public static By BANK_STATE = By.cssSelector("[name='bank state']");
+    public static By BANK_DISTRICT = By.cssSelector("[name='bank district']");
+    public static By BANK_NAME = By.cssSelector("[name='Bank name']");
+    public static By BANK_BRANCH_NAME = By.cssSelector("[name='Branch name']");
+    public static By BANK_ACCOOUNT_TYPE = By.cssSelector("[name='bank type']");
 
     public static By FARMER_NAME  = By.cssSelector("input[name='Farmer Name']");
     public static By SELECT_VERIFICATION = By.xpath("select[class*='groupSelect']");
@@ -34,7 +40,7 @@ public class ApplicationPage {
     public static By CASTE_CATEGORY = By.cssSelector("select[name='Category']");
     public static By FARMER_CATEGORY = By.cssSelector("select[name='Farmer Category']");
     public static By FARMER_TYPE = By.cssSelector("select[name='Farmer Type']");
-    public static By PRIMARY_FARMER = By.cssSelector("input[name='primaryFarmer']");
+    public static By PRIMARY_FARMER = By.xpath("(//input[@name='primaryFarmer'])[1]");
     public static By FARMER_STATE = By.cssSelector("[name='Farmer State']");
     public static By FARMER_DISTRICT = By.cssSelector("[name='Farmer District']");
     public static By FARMER_SUB_DISTRICT = By.cssSelector("[name='Farmer Sub District']");
@@ -62,8 +68,16 @@ public class ApplicationPage {
     public static By SOWING_DATE = By.cssSelector("#sowingDatet0");
     public static By SURVEY_NUMBER = By.cssSelector("[name='Khata No']");
     public static By PLOT_NUMBER = By.cssSelector("[name='Khasra No']");
+    public static By INSURED_AREA = By.cssSelector("[name='insured area']");
+    public static By ADD_CROP_FOR_INSURANCE = By.xpath("//button[contains(text(),'Add Crop for Insurance')]");
+    public static By REMOVE_ADDED_CROP = By.xpath("//*[text()=' X']");
     public static By BACK_TO_FARMER_DETAILS_BUTTON = By.xpath("//button[contains(text(),'Back To Farmer Details')]");
     public static By PREVIEW_BUTTON = By.xpath("//button[contains(text(),'Preview')]");
     public static By SUBMIT_BUTTON = By.xpath("//button[contains(text(),'SUBMIT')]");
+    public static By POLICY_ID = By.xpath("//*[text()='Policy ID']/following-sibling::i");
+    public static By CLOSE_BUTTON = By.xpath("//*[text()='Close']");
+
+    public static By CALENDAR_MONTH_ALL_DATES = By.xpath("(//*[contains(@class,'CalendarMonth_table')])[2]//td[@role='button']");
+    public static By CURRENT_YEAR_MONTH = By.cssSelector("[data-visible='true'] strong");
 
 }

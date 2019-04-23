@@ -54,7 +54,7 @@ public class MouseHover extends Elements {
             if(findElements(locator) != null){
                 List<WebElement> list = findElements(locator);
                 for(WebElement element : list){
-                    if(VerifyElements.isElementVisible(element)){
+                    if(VerifyElements.isElementVisible(locator)){
                         if(count == index)
                             actions.moveToElement(list.get(index)).build().perform();
                     }
