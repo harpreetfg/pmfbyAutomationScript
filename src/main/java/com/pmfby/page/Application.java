@@ -2,6 +2,8 @@ package com.pmfby.page;
 
 import com.aventstack.extentreports.Status;
 import com.pmfby.pageObjects.ApplicationPage;
+import com.pmfby.pageObjects.HomePage;
+import com.pmfby.pageObjects.LoginPage;
 import com.pmfby.resources.*;
 import com.pmfby.utility.Loggers;
 import com.pmfby.utility.Reports;
@@ -21,11 +23,13 @@ public class Application {
     private ScrollPage scroll = new ScrollPage();
     private SelectCalendar calendar = new SelectCalendar();
     private Elements elements = new Elements();
+    private MouseHover hover = new MouseHover();
 
     private void selectUserBranch(){
         try{
             click.buttonClick(ApplicationPage.SELECT_BRANCH);
-            select.selectElementByText(ApplicationPage.SELECT_BRANCH, "BILASPUR");
+            select.selectElementByIndex(ApplicationPage.SELECT_BRANCH, 1);
+//            select.selectElementByText(ApplicationPage.SELECT_BRANCH, "BILASPUR");
             Loggers.logger.info("Selected the Branch Head/User branch");
             Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.INFO, "Selected the branch"));
 //                click.buttonClick(ApplicationPage.SELECT_PACS);
@@ -200,13 +204,13 @@ public class Application {
         try{
             Thread.sleep(1000);
             click.buttonClick(ApplicationPage.CROP_DETAILS_DISTRICT);
-            select.selectElementByIndex(ApplicationPage.CROP_DETAILS_DISTRICT, 1);
+            select.selectElementByIndex(ApplicationPage.CROP_DETAILS_DISTRICT, 2);
             Loggers.logger.info("Selected the notified District");
-            click.buttonClick(ApplicationPage.CROP_DETAILS_TEHSIL_SUB_TEHSIL);
-            select.selectElementByIndex(ApplicationPage.CROP_DETAILS_TEHSIL_SUB_TEHSIL, 1);
+            click.buttonClick(ApplicationPage.CROP_DETAILS_BLOCK);
+            select.selectElementByIndex(ApplicationPage.CROP_DETAILS_BLOCK, 2);
             Loggers.logger.info("Selected the notified Tehsil");
             click.buttonClick(ApplicationPage.CROP_DETAILS_GRAM_PANCHAYAT);
-            select.selectElementByIndex(ApplicationPage.CROP_DETAILS_GRAM_PANCHAYAT, 1);
+            select.selectElementByIndex(ApplicationPage.CROP_DETAILS_GRAM_PANCHAYAT, 2);
             Loggers.logger.info("Selected the notified Gram Panchayat");
             Thread.sleep(1000);
             click.buttonClick(ApplicationPage.CROP_DETAILS_VILLAGE);
@@ -215,7 +219,7 @@ public class Application {
             click.buttonClick(ApplicationPage.SELECT_CROP);
             Thread.sleep(1000);
             if(!elements.findElements(ApplicationPage.SELECT_CROP).isEmpty()){
-                select.selectElementByText(ApplicationPage.SELECT_CROP, "Babool");
+                select.selectElementByIndex(ApplicationPage.SELECT_CROP, 1);
                 Loggers.logger.info("Selected the crop");
                 click.buttonClick(ApplicationPage.SELECT_PREMIUM_DEBIT_DATE);
                 calendar.selectDate("22");
@@ -260,6 +264,79 @@ public class Application {
                 Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.FAIL,
                         "Notified Crops Not Available and Hence Failed to Submit The Application"));
                 Assert.fail();
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public void goToUnPaidApplicationPage(){
+        try{
+            hover.mouseHover(LoginPage.APPLICATION_TAB);
+            click.buttonClick(ApplicationPage.APPLICATION_TAB_UNPAID_APPLICATION);
+            wait.waitForPageLoad();
+            if(VerifyElements.isElementPresent(ApplicationPage.FIND_APPLICATION_BUTTON)){
+                Loggers.logger.info("Successfully landed on the Unpaid Application page");
+                Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.PASS,
+                        "After Successfully Landing On The Unpaid Application Page"));
+            }
+            else{
+                Loggers.logger.error("Failed to direct to the Unpaid Application Page");
+                Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.FAIL,
+                        "Failed to direct to the Unpaid Application Page"));
+                Assert.fail();
+            }
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public void viewUnpaidApplicationList(){
+        try{
+            select.selectElementByIndex(ApplicationPage.INSURANCE_COMPANY_UNPAID, 1);
+            select.selectElementByText(ApplicationPage.CROP_NAME_UNPAID, "All Crops");
+            select.selectElementByText(ApplicationPage.ROLE_UNPAID, "Commercial Bank Branch Head");
+            select.selectElementByText(ApplicationPage.BRANCH_NAME_UNPAID, "BILASPUR");
+            click.buttonClick(ApplicationPage.FIND_APPLICATION_BUTTON);
+            System.out.println("============================");
+            wait.waitForElementToBeDisplayed(ApplicationPage.CHECKBOX_UNPAID_APPLICATION);
+            if(VerifyElements.isElementPresent(ApplicationPage.APPLICATION_NUMBER_UNPAID)){
+                Loggers.logger.info("Retrieving the Unpaid Applications list");
+                Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.PASS,
+                        "Successfully retrieved the Unpaid Applications list"));
+            }
+            else{
+                Loggers.logger.error("Unpaid Application list not available");
+                Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.FAIL,
+                        "Unpaid Application list not available"));
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public void goToPaidApplication(){
+        try{
+            hover.mouseHover(LoginPage.APPLICATION_TAB);
+            click.buttonClick(ApplicationPage.APPLICATION_TAB_PAID_APPLICATION);
+            Loggers.logger.info("Clicked on the Paid Applications Tab");
+            Thread.sleep(1000);
+            if(VerifyElements.isElementPresent(ApplicationPage.PRINT_RECEIPT_BUTTON)){
+                Loggers.logger.info("Dropped on the PAID APPLICATIONS page");
+                Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.PASS,
+                        "After dropping on the PAID APPLICATION page"));
+            }
+            else{
+                Loggers.logger.error("Failed to move to the PAID APPLICATIONS page");
+                Reports.extentTest.addScreenCaptureFromPath(capture.takeScreenShot(Status.FAIL,
+                        "Failed to move to the PAID APPLICATIONS page"));
             }
         }
         catch(Exception e){

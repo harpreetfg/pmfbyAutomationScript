@@ -14,7 +14,7 @@ public class SelectDropDown extends Elements {
     Result result = new Result();
 
 
-    public String selectElementByIndex(By locator, int index){
+    public void selectElementByIndex(By locator, int index){
         String text = null;
         try{
             element = findElement(locator);
@@ -30,7 +30,6 @@ public class SelectDropDown extends Elements {
             e.printStackTrace();
             Loggers.logger.error("Select web element not located: "+locator);
         }
-        return text;
     }
 
 

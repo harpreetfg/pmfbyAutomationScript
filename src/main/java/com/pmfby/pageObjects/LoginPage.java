@@ -6,7 +6,7 @@ public class LoginPage {
 
     public static By SELECT_STATE_SSSYID = By.xpath("//*[contains(text(),'States')]/following-sibling::select");
     public static By SEARCH_SSSYID = By.cssSelector("[type='text']");
-    public static By SELECT_SSSYID_RADIO_BUTTON = By.cssSelector("#radioSSSY04010218 [class^='radio']");
+    public static By SELECT_SSSYID_RADIO_BUTTON = By.cssSelector("#radioSSSY02010219 [class^='radio']");
     public static By SUBMIT_BUTTON = By.xpath("//button[text()='Submit']");
     public static By HOME_TAB = By.xpath("(//a[text()='Home'])[1]");
     public static By CIRCULAR_TAB = By.xpath("(//a[text()='Circular'])");

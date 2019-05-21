@@ -15,12 +15,12 @@ public class SelectCalendar {
         try{
             List<WebElement> dates = elements.findElements(ApplicationPage.CALENDAR_MONTH_ALL_DATES);
             assert dates != null;
-            for(WebElement element : dates){
-                if(element.getText().equals(date)){
-                    element.click();
-                    break;
+                for(WebElement element : dates){
+                    if(element.getText().equals(date)){
+                        element.click();
+                        break;
+                    }
                 }
-            }
         }
         catch(Exception e){
             e.printStackTrace();

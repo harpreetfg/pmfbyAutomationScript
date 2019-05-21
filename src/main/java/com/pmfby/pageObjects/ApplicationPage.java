@@ -7,6 +7,8 @@ public class ApplicationPage {
     public static By APPLICATION_FORM_LOANEE = By.xpath("//*[contains(@class,'btnPolicy')]/a[text()='Application Form Loanee']");
     public static By APPLICATION_FORM_NON_LOANEE  = By.xpath("//*[contains(@class,'btnPolicy')]/a[text()='Application Form Non Loanee']");
     public static By UNPAID_APPLICATIONS = By.xpath("//*[contains(@class,'btnPolicy')]/a[text()='Unpaid Applications']");
+    public static By APPLICATION_TAB_UNPAID_APPLICATION = By.xpath("//a[text()='Unpaid Applications']");
+    public static By APPLICATION_TAB_PAID_APPLICATION = By.xpath("//a[text()='Paid Applications']");
     public static By PAID_APPLICATIONS = By.xpath("//*[contains(@class,'btnPolicy')]/a[text()='Paid Applications']");
     public static By APPROVED_APPLICATIONS = By.xpath("//*[contains(@class,'btnPolicy')]/a[text()='Approved Applications']");
     public static By REJECTED_APPLICATIONS = By.xpath("//*[contains(@class,'btnPolicy')]/a[text()='Rejected Paid Applications']");
@@ -58,11 +60,13 @@ public class ApplicationPage {
 
     public static By CROP_DETAILS_DISTRICT = By.cssSelector("[name='INSURANCE District']");
     public static By CROP_DETAILS_TEHSIL_SUB_TEHSIL = By.cssSelector("[name='INSURANCE TehsilSubTehsil']");
+    public static By CROP_DETAILS_BLOCK = By.cssSelector("[name='INSURANCE Block']");
     public static By CROP_DETAILS_GRAM_PANCHAYAT = By.cssSelector("[name='INSURANCE GramPanchayat']");
     public static By CROP_DETAILS_VILLAGE = By.cssSelector("[name='INSURANCE Village']");
     public static By MIX_CROP_CHECKBOX = By.cssSelector("[name='mixcrop']");
     public static By SELECT_CROP = By.cssSelector("select[data-cropdetailsindex]");
     public static By SELECT_PREMIUM_DEBIT_DATE = By.cssSelector("#premiumDebitDate0");
+//    public static By DATE_NOT_AVAILABLE = By.cssSelector()
     public static By CALENDER_PREVIOUS_BUTTON = By.cssSelector("button[class*='leftButton']");
     public static By CALENDER_NEXT_BUTTON = By.cssSelector("button[class*='rightButton']");
     public static By SOWING_DATE = By.cssSelector("#sowingDatet0");
@@ -79,5 +83,20 @@ public class ApplicationPage {
 
     public static By CALENDAR_MONTH_ALL_DATES = By.xpath("(//*[contains(@class,'CalendarMonth_table')])[2]//td[@role='button']");
     public static By CURRENT_YEAR_MONTH = By.cssSelector("[data-visible='true'] strong");
+
+
+
+    public static By INSURANCE_COMPANY_UNPAID = By.cssSelector("[name='Insurance Company']");
+    public static By CROP_NAME_UNPAID = By.cssSelector("[name='Crop Name']");
+    public static By ROLE_UNPAID = By.cssSelector("[name='Role']");
+    public static By BRANCH_NAME_UNPAID = By.cssSelector("[name='Policy Branch']");
+    public static By FIND_APPLICATION_BUTTON = By.xpath("//*[contains(text(),'Find Application')]");
+    public static By ATTACH_UTR_BUTTON = By.xpath("//*[contains(text(),'Attach UTR')]");
+    public static By CHECKBOX_UNPAID_APPLICATION = By.cssSelector("[name='policyNumberUtr0']");
+    public static By UTR_LIST_UNPAID = By.cssSelector("[name='UTR LIST']");
+    public static By SUBMIT_ATTACH_UTR = By.xpath("//a[contains(text(),'Submit')]");
+    public static By APPLICATION_NUMBER_UNPAID = By.xpath("//tbody//td[3]");
+    public static By PAGINATION_COUNT = By.cssSelector("select#formHorizontalEmail");
+    public static By PRINT_RECEIPT_BUTTON = By.xpath("//button[contains(text(),'//button[contains(text(),'Print Receipt')]')]");
 
 }

@@ -6,6 +6,11 @@
     <parameter name="BROWSERTYPE" value="chrome"/>
     <parameter name="REMOTE" value="false"/>
     <test name="LOGIN">
+        <groups>
+            <run>
+                <include name="BANK_APPLICATION_SUBMISSION"/>
+            </run>
+        </groups>
         <classes>
             <class name="com.pmfby.execution.TestExecution"/>
             <class name="com.pmfby.execution.Tests"/>

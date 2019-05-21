@@ -15,17 +15,17 @@ import java.util.Date;
 
 public class TestExecution extends Result {
 
-    Reports reports = new Reports();
-    LaunchBrowser browser = new LaunchBrowser();
+    private Reports reports = new Reports();
+    private LaunchBrowser browser = new LaunchBrowser();
     public static String browserName = null;
 
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
     ITestResult result;
     String className = this.getClass().getSimpleName();
     String cwd = "user.dir";
 
 
-    @BeforeTest
+    @BeforeTest(alwaysRun = true)
     @Parameters({"BROWSERTYPE", "REMOTE"})
     public void createTestResult(String browserType, String remote){
         browserName = browserType;
@@ -57,7 +57,7 @@ public class TestExecution extends Result {
         reports.setEndTime(new Date());
     }
 
-    @AfterSuite
+    @AfterSuite(alwaysRun = true)
     public void terminateTest(){
         if(reports != null)
             reports.close();
